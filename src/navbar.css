@@ -1,0 +1,15 @@
+.navbar{
+    display:flex;
+    align-items: center;
+}
+.logoclass{
+    display:flex;
+    align-items: center;
+}
+.listitems{
+    display:flex;
+    list-style-type: none;
+}
+.logo{
+    width:80px;
+}
