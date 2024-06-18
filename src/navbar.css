@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     
-    position:sticky;
+    position:fixed;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     border-radius:10px;
 }
@@ -53,4 +53,18 @@ a{
   
   a:active {
     text-decoration: underline;
+  }
+  .hamburger{
+    display:none;
+  }
+  
+  @media (max-width:1084px) {
+      .hamburger{
+        display:block;
+
+      }
+      .listitems{
+        display:none;
+      }
+    
   }
