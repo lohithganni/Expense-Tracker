@@ -5,12 +5,13 @@
   background-color: rgb(236, 229, 229);
   position: fixed;
   top: 0px;
-  right:15px;
+  right: 15px;
   left: 15px;
-  transition:0.3s all;
+  transition: 0.3s all;
   border-radius: 10px;
-  height:60px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  height: 60px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   z-index: 5;
 }
 .logoclass {
@@ -47,12 +48,10 @@ a {
 
 a:hover {
   text-decoration: underline;
-  
 }
 
 a:active {
   text-decoration: underline;
-  
 }
 .hamburger {
   display: none;
@@ -67,48 +66,60 @@ a:active {
   }
 }
 
+
 @media (max-width: 508px) {
-  .logoclass{
+  .logoclass {
     display: none;
   }
-  .navbar{
+  .navbar {
     justify-content: flex-end;
   }
 }
 
-.navigation{
-  position:fixed;
-  right:15px;
-  left:15px;
-  
-  top:61px;
+.navigation {
+  position: fixed;
+  right: 15px;
+  left: 15px;
+  top: 61px;
   border-radius: 10px;
-  height:50px;
-  color:white;
+  height: 50px;
+  color: white;
   background-color: black;
-  text-align:center;
-  align-items: center;
+  z-index: 5;
 }
-.list{
+
+.list {
   display: flex;
   list-style-type: none;
-  justify-content: space-evenly;
+  padding:0;
+  margin:0;
+
 }
-.list a{
-  color:white;
+.list a {
+  color: white;
+  font-size: 14px;
 }
-@media (max-width:615px){
-  .list{
+.list li{
+   padding-top: 10px;
+
+}
+@media (max-width: 615px) {
+  .list {
     flex-direction: column;
+    padding:20px 0px;
   }
-  .navigation{
-    height:200px;
-    left:unset;
-    width:200px;
-    right:30px;
-    
+  .navigation {
+    height: unset;
+    left: unset;
+    width: 160px;
+    right: 30px;
+  }
+  .list li a {
+    padding: 0;
   }
   .list li{
-    margin:5px auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin:0 auto;
   }
 }
