@@ -10,6 +10,8 @@ const ExpenseList = ({ expenses }) => {
           <p>Description: {expenses[key].description}</p>
           <p>Amount: {expenses[key].amount}</p>
           <p>Category: {expenses[key].category}</p>
+          <p>Date: {expenses[key].date}</p>
+          <p>Time: {expenses[key].time}</p>
         </div>
       ))}
     </div>

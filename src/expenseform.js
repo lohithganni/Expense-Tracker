@@ -3,8 +3,7 @@ import ExpenseList from './expenseList';
 
 const AddExpenseForm = () => {
   const [mainObject, setMainObject] = useState({});
-  const [newKey, setNewKey] = useState('');
-  const [newObject, setNewObject] = useState({ description: '', amount: '', category: '' });
+  const [newObject, setNewObject] = useState({ description: '', amount: '', category: '',date:'', time:'' });
 
   const handleInputChange = (e, field) => {
     setNewObject({
@@ -15,12 +14,16 @@ const AddExpenseForm = () => {
 
   const addObject = () => {
     if (newObject.description && newObject.amount && newObject.category) {
-      const key = new Date().toISOString(); // Generate a unique key based on timestamp
+      const currentTime=new Date();
+      const key = currentTime.toString();
+      
+      newObject.time=currentTime.getTime();
+      newObject.date=currentTime.getDate();
       setMainObject({
         ...mainObject,
         [key]: newObject,
       });
-      setNewObject({ description: '', amount: '', category: '' }); // Reset newObject to empty
+      setNewObject({ description: '', amount: '', category: '',date:'', time:'' }); // Reset newObject to empty
     }
   };
 
@@ -41,7 +44,7 @@ const AddExpenseForm = () => {
             onChange={(e) => handleInputChange(e, 'description')}
           />
           <input
-            type="text"
+            type="number"
             className="amount"
             placeholder="amount"
             value={newObject.amount}
