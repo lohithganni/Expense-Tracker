@@ -4,6 +4,7 @@ const AddExpenseForm = () => {
   const COUNT_KEY = "count";
   const EXPENSES_KEY = "expenses";
   const TOTAL_EXPENSE_KEY = "totalExpense";
+  const MAIN_OBJECT_KEY = "mainObject";
 
   const [count, setCount] = useState(() => {
     const storedCount = localStorage.getItem(COUNT_KEY);
@@ -28,10 +29,16 @@ const AddExpenseForm = () => {
     time: "",
   });
 
+  const [mainObject, setMainObject] = useState(() => {
+    const storedMainObject = localStorage.getItem(MAIN_OBJECT_KEY);
+    return storedMainObject ? JSON.parse(storedMainObject) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem(COUNT_KEY, count);
     localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
-  }, [count, expenses]);
+    localStorage.setItem(MAIN_OBJECT_KEY, JSON.stringify(mainObject));
+  }, [count, expenses, mainObject]);
 
   useEffect(() => {
     localStorage.setItem(TOTAL_EXPENSE_KEY, totalExpense);
@@ -51,19 +58,23 @@ const AddExpenseForm = () => {
       const updatedNewExpense = {
         ...newExpense,
         amount: parseFloat(newExpense.amount),
-        time: currentTime.getTime(),
-        date: currentTime.toDateString(),
+        time: currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        date: currentTime.toLocaleDateString(),
       };
 
-      setExpenses((prevExpenses) => {
-        return [
-          ...(Array.isArray(prevExpenses) ? prevExpenses : []),
-          updatedNewExpense,
-        ];
-      });
+      setExpenses((prevExpenses) => [
+        ...(Array.isArray(prevExpenses) ? prevExpenses : []),
+        updatedNewExpense,
+      ]);
 
       setCount((prevCount) => prevCount + 1);
-      setTotal((prevTotal) => prevTotal + updatedNewExpense.amount); 
+      setTotal((prevTotal) => prevTotal + updatedNewExpense.amount);
+
+      // Add to mainObject
+      setMainObject((prevMainObject) => [
+        ...(Array.isArray(prevMainObject) ? prevMainObject : []),
+        updatedNewExpense,
+      ]);
 
       setNewExpense({
         description: "",
@@ -78,6 +89,17 @@ const AddExpenseForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addExpense();
+  };
+
+  const clearData = () => {
+    setCount(0);
+    setExpenses([]);
+    setMainObject([]);
+    setTotal(0);
+    localStorage.removeItem(COUNT_KEY);
+    localStorage.removeItem(EXPENSES_KEY);
+    localStorage.removeItem(MAIN_OBJECT_KEY);
+    localStorage.removeItem(TOTAL_EXPENSE_KEY);
   };
 
   return (
@@ -117,10 +139,56 @@ const AddExpenseForm = () => {
         <input
           type="submit"
           value="submit"
-          className="btn btn-primary"
+          className="btna"
           style={{ margin: "5px 120px" }}
         />
       </form>
+
+      
+      <table className="table" >
+        <thead>
+          <tr>
+            <th>Total Expense</th>
+            <td>{totalExpense}</td>  
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr >
+            <th>Total Transactions</th>
+              <td>{count}</td>
+            </tr>
+         
+        </tbody>
+      </table>
+      <div className="tableTop">
+      <h2>Expenses Table</h2>
+      <button className="btna" onClick={clearData} style={{ margin: "5px 120px" }}>
+        Clear
+      </button>
+      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mainObject.slice().reverse().map((expense, index) => (
+            <tr key={index}>
+              <td>{expense.description}</td>
+              <td>{expense.amount}</td>
+              <td>{expense.category}</td>
+              <td>{expense.date}</td>
+              <td>{expense.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
