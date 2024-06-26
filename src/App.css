@@ -50,3 +50,8 @@ body {
   box-shadow: inset 0px 3px 7px #d6d6e7;
   transform: translateY(1px);
 }
+
+.description{
+  width:25vw;
+  min-width: 200px;
+}

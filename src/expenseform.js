@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import ExpenseSum from "./expenseSum";
 const COUNT_KEY = "count";
 const TOTAL_EXPENSE_KEY = "totalExpense";
 const MAIN_OBJECT_KEY = "mainObject";
@@ -170,10 +170,9 @@ const AddExpenseForm = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>Description</th>
+            <th className="description">Description</th>
             <th>Amount</th>
             <th>Category</th>
-            <th>Date</th>
             <th>Time</th>
           </tr>
         </thead>
@@ -181,14 +180,14 @@ const AddExpenseForm = () => {
           {Array.from(mainObject.entries()).map(([date, expenses]) => (
             <React.Fragment key={date}>
               <tr>
-                <td colSpan="5"><h4>{date}</h4></td>
+                <td className="text-muted"><p>{date}</p></td>
+                <ExpenseSum expenses={expenses}/>
               </tr>
               {(expenses || []).map((expense, index) => (
                 <tr key={`${date}-${index}`}>
-                  <td>{expense.description}</td>
-                  <td>{expense.amount}</td>
+                  <td className="description">{expense.description}</td>
+                  <td style={{alignContent:"center", justifyContent:'space-between'}}>{expense.amount}</td>
                   <td>{expense.category}</td>
-                  <td>{expense.date}</td>
                   <td>{expense.time}</td>
                 </tr>
               ))}
