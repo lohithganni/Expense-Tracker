@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react";
 
+const COUNT_KEY = "count";
+const TOTAL_EXPENSE_KEY = "totalExpense";
+const MAIN_OBJECT_KEY = "mainObject";
+const CATEGORIES = ["food", "stationary", "clothes", "daily-essentials"];
+
+const loadFromLocalStorage = (key, defaultValue) => {
+  const storedValue = localStorage.getItem(key);
+  return storedValue ? JSON.parse(storedValue) : defaultValue;
+};
+
 const AddExpenseForm = () => {
-  const COUNT_KEY = "count";
-  const EXPENSES_KEY = "expenses";
-  const TOTAL_EXPENSE_KEY = "totalExpense";
-  const MAIN_OBJECT_KEY = "mainObject";
-
-  const [count, setCount] = useState(() => {
-    const storedCount = localStorage.getItem(COUNT_KEY);
-    return storedCount ? parseInt(storedCount, 10) : 0;
-  });
-
-  const [totalExpense, setTotal] = useState(() => {
-    const storedTotal = localStorage.getItem(TOTAL_EXPENSE_KEY);
-    return storedTotal ? parseInt(storedTotal, 10) : 0;
-  });
-
-  const [expenses, setExpenses] = useState(() => {
-    const storedExpenses = localStorage.getItem(EXPENSES_KEY);
-    return storedExpenses ? JSON.parse(storedExpenses) : [];
-  });
-
+  const [count, setCount] = useState(() => loadFromLocalStorage(COUNT_KEY, 0));
+  const [totalExpense, setTotal] = useState(() => loadFromLocalStorage(TOTAL_EXPENSE_KEY, 0));
   const [newExpense, setNewExpense] = useState({
     description: "",
     amount: "",
@@ -31,17 +23,24 @@ const AddExpenseForm = () => {
 
   const [mainObject, setMainObject] = useState(() => {
     const storedMainObject = localStorage.getItem(MAIN_OBJECT_KEY);
-    return storedMainObject ? JSON.parse(storedMainObject) : [];
+    if (storedMainObject) {
+      try {
+        return new Map(JSON.parse(storedMainObject));
+      } catch (e) {
+        console.error("Failed to parse main object from localStorage", e);
+        return new Map();
+      }
+    }
+    return new Map();
   });
 
   useEffect(() => {
-    localStorage.setItem(COUNT_KEY, count);
-    localStorage.setItem(EXPENSES_KEY, JSON.stringify(expenses));
-    localStorage.setItem(MAIN_OBJECT_KEY, JSON.stringify(mainObject));
-  }, [count, expenses, mainObject]);
+    localStorage.setItem(COUNT_KEY, JSON.stringify(count));
+    localStorage.setItem(MAIN_OBJECT_KEY, JSON.stringify(Array.from(mainObject.entries())));
+  }, [count, mainObject]);
 
   useEffect(() => {
-    localStorage.setItem(TOTAL_EXPENSE_KEY, totalExpense);
+    localStorage.setItem(TOTAL_EXPENSE_KEY, JSON.stringify(totalExpense));
   }, [totalExpense]);
 
   const handleInputChange = (e, field) => {
@@ -53,28 +52,32 @@ const AddExpenseForm = () => {
 
   const addExpense = () => {
     if (newExpense.description && newExpense.amount && newExpense.category) {
-      const currentTime = new Date();
+      const amount = parseFloat(newExpense.amount);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount");
+        return;
+      }
 
+      const currentTime = new Date();
       const updatedNewExpense = {
         ...newExpense,
-        amount: parseFloat(newExpense.amount),
-        time: currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        amount,
+        time: currentTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
         date: currentTime.toLocaleDateString(),
       };
-
-      setExpenses((prevExpenses) => [
-        ...(Array.isArray(prevExpenses) ? prevExpenses : []),
-        updatedNewExpense,
-      ]);
 
       setCount((prevCount) => prevCount + 1);
       setTotal((prevTotal) => prevTotal + updatedNewExpense.amount);
 
-      // Add to mainObject
-      setMainObject((prevMainObject) => [
-        ...(Array.isArray(prevMainObject) ? prevMainObject : []),
-        updatedNewExpense,
-      ]);
+      setMainObject((prevMainObject) => {
+        const newMainObject = new Map(prevMainObject);
+        const dateExpenses = newMainObject.get(updatedNewExpense.date) || [];
+        newMainObject.set(updatedNewExpense.date, [...dateExpenses, updatedNewExpense]);
+        return newMainObject;
+      });
 
       setNewExpense({
         description: "",
@@ -93,11 +96,9 @@ const AddExpenseForm = () => {
 
   const clearData = () => {
     setCount(0);
-    setExpenses([]);
-    setMainObject([]);
+    setMainObject(new Map());
     setTotal(0);
     localStorage.removeItem(COUNT_KEY);
-    localStorage.removeItem(EXPENSES_KEY);
     localStorage.removeItem(MAIN_OBJECT_KEY);
     localStorage.removeItem(TOTAL_EXPENSE_KEY);
   };
@@ -122,10 +123,9 @@ const AddExpenseForm = () => {
             onChange={(e) => handleInputChange(e, "category")}
           >
             <option value="">Select category</option>
-            <option value="food">food</option>
-            <option value="stationary">stationary</option>
-            <option value="clothes">clothes</option>
-            <option value="daily-essentials">daily essentials</option>
+            {CATEGORIES.map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
           </select>
           <input
             type="number"
@@ -135,7 +135,6 @@ const AddExpenseForm = () => {
             onChange={(e) => handleInputChange(e, "amount")}
           />
         </div>
-
         <input
           type="submit"
           value="submit"
@@ -144,28 +143,29 @@ const AddExpenseForm = () => {
         />
       </form>
 
-      
-      <table className="table" >
+      <table className="table">
         <thead>
           <tr>
             <th>Total Expense</th>
-            <td>{totalExpense}</td>  
+            <td>{totalExpense}</td>
           </tr>
         </thead>
         <tbody>
-          
-            <tr >
+          <tr>
             <th>Total Transactions</th>
-              <td>{count}</td>
-            </tr>
-         
+            <td>{count}</td>
+          </tr>
         </tbody>
       </table>
       <div className="tableTop">
-      <h2>Expenses Table</h2>
-      <button className="btna" onClick={clearData} style={{ margin: "5px 120px" }}>
-        Clear
-      </button>
+        <h2>Expenses Table</h2>
+        <button
+          className="btna"
+          onClick={clearData}
+          style={{ margin: "5px 120px" }}
+        >
+          Clear
+        </button>
       </div>
       <table className="table">
         <thead>
@@ -178,14 +178,21 @@ const AddExpenseForm = () => {
           </tr>
         </thead>
         <tbody>
-          {mainObject.slice().reverse().map((expense, index) => (
-            <tr key={index}>
-              <td>{expense.description}</td>
-              <td>{expense.amount}</td>
-              <td>{expense.category}</td>
-              <td>{expense.date}</td>
-              <td>{expense.time}</td>
-            </tr>
+          {Array.from(mainObject.entries()).map(([date, expenses]) => (
+            <React.Fragment key={date}>
+              <tr>
+                <td colSpan="5"><h4>{date}</h4></td>
+              </tr>
+              {(expenses || []).map((expense, index) => (
+                <tr key={`${date}-${index}`}>
+                  <td>{expense.description}</td>
+                  <td>{expense.amount}</td>
+                  <td>{expense.category}</td>
+                  <td>{expense.date}</td>
+                  <td>{expense.time}</td>
+                </tr>
+              ))}
+            </React.Fragment>
           ))}
         </tbody>
       </table>
