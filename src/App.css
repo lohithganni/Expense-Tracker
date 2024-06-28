@@ -56,3 +56,16 @@ body {
   min-width: 75px;
   
 }
+#del-icon{
+  color:grey;
+  font-size: 25px;
+  padding: 0;
+}
+#del-icon:hover{
+  color:rgb(18, 17, 17); 
+  
+  padding:0;
+}
+.btn-del{
+   padding:auto;
+}

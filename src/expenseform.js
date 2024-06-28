@@ -56,7 +56,6 @@ const AddExpenseForm = () => {
       const expenses = newMainObject.get(date);
   
       if (expenses) {
-        // Find the expense to delete
         const expenseIndex = expenses.findIndex(
           (expense) => JSON.stringify(expense) === JSON.stringify(expenseToDelete)
         );
@@ -64,12 +63,10 @@ const AddExpenseForm = () => {
         if (expenseIndex !== -1) {
           const amount = parseFloat(expenses[expenseIndex].amount);
   
-          // Update totals
           if (!isNaN(amount)) {
             setTotals(amount);
           }
   
-          // Remove the expense
           const updatedExpenses = expenses.filter(
             (expense) => JSON.stringify(expense) !== JSON.stringify(expenseToDelete)
           );
@@ -234,9 +231,11 @@ const AddExpenseForm = () => {
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.amount}</td>
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.category}</td>
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.time}</td>
-                  <td><button onClick={()=>
+                  <td style={{width:'50px',alignContent:'center',padding:'auto'}}><button className="btn-del" style={{borderStyle:'none',backgroundColor:'white'}} onClick={()=>
                     deleteKey(date,expense)
-                  }>delete</button></td>
+                  }><span class="material-symbols-outlined" id='del-icon' >
+                  delete
+                  </span ></button></td>
                 </tr>
               ))}
             </React.Fragment>
