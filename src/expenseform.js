@@ -49,7 +49,53 @@ const AddExpenseForm = () => {
       [field]: e.target.value,
     });
   };
-
+  
+  const deleteKey = (date, expenseToDelete) => {
+    setMainObject((prevMainObject) => {
+      const newMainObject = new Map(prevMainObject);
+      const expenses = newMainObject.get(date);
+  
+      if (expenses) {
+        // Find the expense to delete
+        const expenseIndex = expenses.findIndex(
+          (expense) => JSON.stringify(expense) === JSON.stringify(expenseToDelete)
+        );
+  
+        if (expenseIndex !== -1) {
+          const amount = parseFloat(expenses[expenseIndex].amount);
+  
+          // Update totals
+          if (!isNaN(amount)) {
+            setTotals(amount);
+          }
+  
+          // Remove the expense
+          const updatedExpenses = expenses.filter(
+            (expense) => JSON.stringify(expense) !== JSON.stringify(expenseToDelete)
+          );
+  
+          if (updatedExpenses.length > 0) {
+            newMainObject.set(date, updatedExpenses);
+          } else {
+            newMainObject.delete(date);
+          }
+        }
+      }
+  
+      return newMainObject;
+    });
+  };
+  
+  const setTotals = (expense) => {
+    setTotal((prevTotal) => {
+      let amount = parseFloat(prevTotal) - expense;
+      return amount;
+    });
+    setCount((prevCount) => prevCount - 1);
+  };
+  
+  
+  
   const addExpense = () => {
     if (newExpense.description && newExpense.amount && newExpense.category) {
       const amount = parseFloat(newExpense.amount);
@@ -188,7 +234,9 @@ const AddExpenseForm = () => {
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.amount}</td>
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.category}</td>
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.time}</td>
-             
+                  <td><button onClick={()=>
+                    deleteKey(date,expense)
+                  }>delete</button></td>
                 </tr>
               ))}
             </React.Fragment>
