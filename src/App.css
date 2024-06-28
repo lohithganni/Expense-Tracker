@@ -1,71 +1,78 @@
-.col{
-    background-color: lightblue;
-    border-radius: 5px;
+.col {
+  background-color: lightblue;
+  border-radius: 5px;
 }
+
 body {
-    margin:0px;
-    
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  .App{
-    margin-top: 80px;
-  }
-  .tableTop{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .btna{
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    transition: box-shadow 0.15s ease,transform 0.15s ease;
-    will-change: box-shadow,transform;
-    background: #FCFCFD;
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #d6d6e7;
-    height: 30px;
-    padding: 0 32px;
-    font-size: 18px;
-    border-radius: 6px;
-    color: #36395a;
-    transition: box-shadow 0.15s ease,transform 0.15s ease;
-  }
-  .btna:hover {
-    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #d6d6e7;
-    transform: translateY(-1px);
+  margin: 0px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.btna:active{
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  margin-top: 80px;
+}
+
+.tableTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btna {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  will-change: box-shadow, transform;
+  background: #fcfcfd;
+  box-shadow: 0px 2px 4px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #d6d6e7;
+  height: 30px;
+  padding: 0 32px;
+  font-size: 18px;
+  border-radius: 6px;
+  color: #36395a;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.btna:hover {
+  box-shadow: 0px 4px 8px rgb(45 35 66 / 40%),
+    0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #d6d6e7;
+  transform: translateY(-1px);
+}
+
+.btna:active {
   box-shadow: inset 0px 3px 7px #d6d6e7;
   transform: translateY(1px);
 }
 
-.description{
- 
+.description {
   min-width: 75px;
-  
 }
-#del-icon{
-  color:grey;
+
+#del-icon {
+  color: grey;
   font-size: 25px;
   padding: 0;
 }
-#del-icon:hover{
-  color:rgb(18, 17, 17); 
-  
-  padding:0;
+
+#del-icon:hover {
+  color: rgb(18, 17, 17);
+
+  padding: 0;
 }
-.btn-del{
-   padding:auto;
+
+.btn-del {
+  padding: auto;
 }

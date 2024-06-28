@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ExpenseSum from "./expenseSum";
+import FilterCategory from "./filter";
 const COUNT_KEY = "count";
 const TOTAL_EXPENSE_KEY = "totalExpense";
 const MAIN_OBJECT_KEY = "mainObject";
-const CATEGORIES = ["food", "stationary", "clothes", "daily-essentials"];
+const CATEGORIES = ["food", "stationary", "clothes", "daily-essentials","investments"];
 
 const loadFromLocalStorage = (key, defaultValue) => {
   const storedValue = localStorage.getItem(key);
@@ -242,6 +243,9 @@ const AddExpenseForm = () => {
           ))}
         </tbody>
       </table>
+      <div className="filter">
+      <FilterCategory mainObject={mainObject} CATEGORIES={CATEGORIES}/>
+      </div>
     </div>
   );
 };
