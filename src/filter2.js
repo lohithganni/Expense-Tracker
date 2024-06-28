@@ -14,7 +14,7 @@ const Filter = ({ value, mainObject }) => {
 
   return (
     <>
-      <h4>{value}</h4>
+      <h4>{"Category: " + value}</h4>
       {catArray.length > 0 ? (
          
         <Table catArray={catArray} />

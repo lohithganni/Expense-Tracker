@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ExpenseSum from "./expenseSum";
 import FilterCategory from "./filter";
+import TodayExpenses from "./todayExpense";
 const COUNT_KEY = "count";
 const TOTAL_EXPENSE_KEY = "totalExpense";
 const MAIN_OBJECT_KEY = "mainObject";
@@ -186,7 +187,7 @@ const AddExpenseForm = () => {
           style={{ margin: "5px 120px" }}
         />
       </form>
-
+      <TodayExpenses mainObject={mainObject}/>
       <table className="table">
         <thead>
           <tr>
@@ -206,7 +207,7 @@ const AddExpenseForm = () => {
         <button
           className="btna"
           onClick={clearData}
-          style={{ margin: "5px 120px" }}
+          style={{ margin: "0" }}
         >
           Clear
         </button>
@@ -226,7 +227,7 @@ const AddExpenseForm = () => {
               <tr>
                 <td colSpan="5" ><ExpenseSum expenses={expenses} date={date}/></td>
               </tr>
-              {(expenses || []).map((expense, index) => (
+              {(expenses || []).slice().reverse().map((expense, index) => (
                 <tr key={`${date}-${index}`}>
                   <td className="description" style={{alignContent:"center", justifyContent:'space-around'}}>{expense.description}</td>               
                   <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.amount}</td>

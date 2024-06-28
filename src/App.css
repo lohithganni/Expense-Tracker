@@ -76,3 +76,13 @@ code {
 .btn-del {
   padding: auto;
 }
+.text{
+  font-size: 24px;
+  
+}
+@media (max-width: 768px) {
+  html, body {
+  width: auto !important;
+  overflow-x: hidden !important;
+  }
+  }
