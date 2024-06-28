@@ -171,8 +171,8 @@ const AddExpenseForm = () => {
         <thead>
           <tr>
             <th className="description">Description</th>
-            <th>Amount</th>
-            <th>Category</th>
+            <th style={{width:'100px | 10%'}}>Amount</th>
+            <th style={{width:'100px | 10%'}}>Category </th>
             <th>Time</th>
           </tr>
         </thead>
@@ -180,15 +180,15 @@ const AddExpenseForm = () => {
           {Array.from(mainObject.entries()).map(([date, expenses]) => (
             <React.Fragment key={date}>
               <tr>
-                <td className="text-muted"><p>{date}</p></td>
-                <ExpenseSum expenses={expenses}/>
+                <td colSpan="5" ><ExpenseSum expenses={expenses} date={date}/></td>
               </tr>
               {(expenses || []).map((expense, index) => (
                 <tr key={`${date}-${index}`}>
-                  <td className="description">{expense.description}</td>
-                  <td style={{alignContent:"center", justifyContent:'space-between'}}>{expense.amount}</td>
-                  <td>{expense.category}</td>
-                  <td>{expense.time}</td>
+                  <td className="description" style={{alignContent:"center", justifyContent:'space-around'}}>{expense.description}</td>               
+                  <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.amount}</td>
+                  <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.category}</td>
+                  <td style={{alignContent:"center", justifyContent:'space-around'}}>{expense.time}</td>
+             
                 </tr>
               ))}
             </React.Fragment>
