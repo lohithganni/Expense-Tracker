@@ -6,7 +6,7 @@ const Filter = ({ value, mainObject }) => {
   // Iterate through the entries of the Map
   mainObject.forEach((expenses, date) => {
     expenses.forEach((obj) => {
-      if (obj.category == value) {
+      if (obj.category === value) {
         catArray.push(obj);
       }
     });
