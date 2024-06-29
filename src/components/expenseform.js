@@ -87,7 +87,7 @@ const AddExpenseForm = () => {
   };
 
   return (
-    <div className="container" id="expenseList">
+    <div className="expenseform" id="expenseList" >
       <h1>Add Expense</h1>
       <form onSubmit={handleSubmit}>
         <textarea
@@ -97,7 +97,14 @@ const AddExpenseForm = () => {
           value={newExpense.description}
           onChange={(e) => handleInputChange(e, "description")}
         ></textarea>
-        <div style={{ display: "flex", margin: "5px 5px" }}>
+        <input
+            type="number"
+            className="form-control h-auto w-auto"
+            placeholder="amount"
+            value={newExpense.amount}
+            onChange={(e) => handleInputChange(e, "amount")}
+          />
+          
           <select
             name="category"
             className="form-select h-auto w-auto"
@@ -110,19 +117,13 @@ const AddExpenseForm = () => {
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
-          <input
-            type="number"
-            className="form-control h-auto w-auto"
-            placeholder="amount"
-            value={newExpense.amount}
-            onChange={(e) => handleInputChange(e, "amount")}
-          />
-        </div>
+          
+       
         <input
           type="submit"
           value="submit"
           className="btna"
-          style={{ margin: "5px 120px" }}
+          
         />
       </form>
     </div>

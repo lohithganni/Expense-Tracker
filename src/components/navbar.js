@@ -44,9 +44,9 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
-                <a className="nav-link" href="#">
+                <NavLink to="*" className="nav-link" >
                   contact us
-                </a>
+                </NavLink>
               </li>
             </ul>
             <form className="d-flex" role="search">

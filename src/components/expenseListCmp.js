@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import ExpenseSum from "./expenseSum";
 import FilterCategory from "./filter";
-
+import Add from "./add";
 const MAIN_OBJECT_KEY = "mainObject";
 const TOTAL_EXPENSE_KEY = "totalExpense";
 const COUNT_KEY = "count";
-const CATEGORIES = ["food", "stationary", "clothes", "daily-essentials", "investments"];
+const CATEGORIES = [
+  "food",
+  "stationary",
+  "clothes",
+  "daily-essentials",
+  "investments",
+];
 
 const ExpenseListCmp = () => {
   const [mainObject, setMainObject] = useState(() => {
@@ -30,7 +36,10 @@ const ExpenseListCmp = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem(MAIN_OBJECT_KEY, JSON.stringify(Array.from(mainObject.entries())));
+    localStorage.setItem(
+      MAIN_OBJECT_KEY,
+      JSON.stringify(Array.from(mainObject.entries()))
+    );
   }, [mainObject]);
 
   useEffect(() => {
@@ -45,23 +54,25 @@ const ExpenseListCmp = () => {
     setMainObject((prevMainObject) => {
       const newMainObject = new Map(prevMainObject);
       const expenses = newMainObject.get(date);
-  
+
       if (expenses) {
         const expenseIndex = expenses.findIndex(
-          (expense) => JSON.stringify(expense) === JSON.stringify(expenseToDelete)
+          (expense) =>
+            JSON.stringify(expense) === JSON.stringify(expenseToDelete)
         );
-  
+
         if (expenseIndex !== -1) {
           const amount = parseFloat(expenses[expenseIndex].amount);
-  
+
           if (!isNaN(amount)) {
             setTotals(amount);
           }
-  
+
           const updatedExpenses = expenses.filter(
-            (expense) => JSON.stringify(expense) !== JSON.stringify(expenseToDelete)
+            (expense) =>
+              JSON.stringify(expense) !== JSON.stringify(expenseToDelete)
           );
-  
+
           if (updatedExpenses.length > 0) {
             newMainObject.set(date, updatedExpenses);
           } else {
@@ -69,11 +80,11 @@ const ExpenseListCmp = () => {
           }
         }
       }
-  
+
       return newMainObject;
     });
   };
-  
+
   const setTotals = (expense) => {
     setTotal((prevTotal) => {
       let amount = parseFloat(prevTotal) - expense;
@@ -92,67 +103,118 @@ const ExpenseListCmp = () => {
   };
 
   return (
-    <div className="container">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Total Expense</th>
-            <td>{totalExpense}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>Total Transactions</th>
-            <td>{count}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className="tableTop">
-        <h2>Expenses Table</h2>
-        <button className="btna" onClick={clearData} style={{ margin: "0" }}>
-          Clear
-        </button>
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th className="description">Description</th>
-            <th style={{ width: '100px | 10%' }}>Amount</th>
-            <th style={{ width: '100px | 10%' }}>Category</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from(mainObject.entries()).map(([date, expenses]) => (
-            <React.Fragment key={date}>
-              <tr>
-                <td colSpan="5"><ExpenseSum expenses={expenses} date={date} /></td>
-              </tr>
-              {(expenses || []).slice().reverse().map((expense, index) => (
-                <tr key={`${date}-${index}`}>
-                  <td className="description" style={{ alignContent: "center", justifyContent: 'space-around' }}>{expense.description}</td>
-                  <td style={{ alignContent: "center", justifyContent: 'space-around' }}>{expense.amount}</td>
-                  <td style={{ alignContent: "center", justifyContent: 'space-around' }}>{expense.category}</td>
-                  <td style={{ alignContent: "center", justifyContent: 'space-around' }}>{expense.time}</td>
-                  <td style={{ width: '50px', alignContent: 'center', padding: 'auto' }}>
-                    <button className="btn-del" style={{ borderStyle: 'none', backgroundColor: 'white' }} onClick={() =>
-                      deleteKey(date, expense)
-                    }>
-                      <span className="material-symbols-outlined" id='del-icon'>
-                        delete
-                      </span>
-                    </button>
+    <>
+      <Add/>
+      <div className="container">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Total Expense</th>
+              <td>{totalExpense}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Total Transactions</th>
+              <td>{count}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="tableTop">
+          <h2>Expenses Table</h2>
+          <button className="btna" onClick={clearData} style={{ margin: "0" }}>
+            Clear
+          </button>
+        </div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th className="description">Description</th>
+              <th style={{ width: "100px | 10%" }}>Amount</th>
+              <th style={{ width: "100px | 10%" }}>Category</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from(mainObject.entries()).map(([date, expenses]) => (
+              <React.Fragment key={date}>
+                <tr>
+                  <td colSpan="5">
+                    <ExpenseSum expenses={expenses} date={date} />
                   </td>
                 </tr>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
-      <div className="filter">
-        <FilterCategory mainObject={mainObject} CATEGORIES={CATEGORIES} />
+                {(expenses || [])
+                  .slice()
+                  .reverse()
+                  .map((expense, index) => (
+                    <tr key={`${date}-${index}`}>
+                      <td
+                        className="description"
+                        style={{
+                          alignContent: "center",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {expense.description}
+                      </td>
+                      <td
+                        style={{
+                          alignContent: "center",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {expense.amount}
+                      </td>
+                      <td
+                        style={{
+                          alignContent: "center",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {expense.category}
+                      </td>
+                      <td
+                        style={{
+                          alignContent: "center",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {expense.time}
+                      </td>
+                      <td
+                        style={{
+                          width: "50px",
+                          alignContent: "center",
+                          padding: "auto",
+                        }}
+                      >
+                        <button
+                          className="btn-del"
+                          style={{
+                            borderStyle: "none",
+                            backgroundColor: "white",
+                          }}
+                          onClick={() => deleteKey(date, expense)}
+                        >
+                          <span
+                            className="material-symbols-outlined"
+                            id="del-icon"
+                          >
+                            delete
+                          </span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+        <div className="filter">
+          <FilterCategory mainObject={mainObject} CATEGORIES={CATEGORIES} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

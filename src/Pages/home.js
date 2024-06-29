@@ -1,6 +1,7 @@
 import Navbar from "../components/navbar";
 import TodayExpenses from "../components/todayExpense";
 import React, { useState, useEffect } from "react";
+import Add from "../components/add";
 
 const Home = () => {
     const MAIN_OBJECT_KEY = "mainObject";
@@ -18,6 +19,7 @@ const Home = () => {
       });
     return ( 
         <>
+            <Add />
             <Navbar />
             <div className="container">
             <TodayExpenses mainObject={mainObject} />

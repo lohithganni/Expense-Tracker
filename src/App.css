@@ -90,3 +90,26 @@ code {
   overflow-x: hidden !important;
   }
   }
+.expenseform{
+  margin:0 20vw;
+}  
+.add{
+  position:fixed;
+  bottom:50px;
+  right:50px;
+
+  z-index: 50;
+}
+.add span{
+  font-size:50px;
+  padding:2px;
+  font-weight: 500;
+  color:rgb(107, 106, 124);
+}
+.add span:hover{
+  color:black;
+  font-size: 56px;
+  position: fixed;
+  bottom:47px;
+  right:47px;
+}
