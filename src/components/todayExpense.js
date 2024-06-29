@@ -15,7 +15,7 @@ const TodayExpenses = ({mainObject}) => {
     return (  
         <>
         {
-            count!==0?<p className="text">{"Today's total Expense is "+amount+", with " +count +" transactions"}</p>: <p className="text">{"No Transactions Today. "}</p>
+            count!==0?<p className="text">{"Today's total Expense is "+amount+", with " +count +" transactions."}</p>: <p className="text">{"No Transactions Today. "}</p>
         }
         </>
     );

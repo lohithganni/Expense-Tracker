@@ -14,10 +14,10 @@ const Filter = ({ value, mainObject }) => {
 
   return (
     <>
-      <h4>{"Category: " + value}</h4>
+      
       {catArray.length > 0 ? (
          
-        <Table catArray={catArray} />
+        <Table catArray={catArray} value={value} />
       ) : (
         <p>No expenses found for the selected category.</p>
       )}

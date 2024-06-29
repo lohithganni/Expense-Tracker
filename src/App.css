@@ -78,7 +78,11 @@ code {
 }
 .text{
   font-size: 24px;
-  
+}
+.amount{
+  width:fit-content;
+  block-size: fit-content;
+
 }
 @media (max-width: 768px) {
   html, body {

@@ -1,5 +1,5 @@
 import ExpenseSum from "./expenseSum";
-const Table = ({catArray}) => {
+const Table = ({catArray,value}) => {
     return (  
         <>
         <table className="table">
@@ -13,12 +13,12 @@ const Table = ({catArray}) => {
         </thead>
         <tbody>
         <tr>
-                <td colSpan="5" ><ExpenseSum expenses={catArray} date={""}/></td>
+                <td colSpan="5" ><ExpenseSum expenses={catArray} date={value}/></td>
               </tr>
               {catArray.slice().reverse().map((expense, index) => (
                 <tr >
                   <td className="description" style={{alignContent:"center", justifyContent:'space-around'}}>{expense.description}</td>               
-                  <td style={{alignContent:"center"}}>{expense.amount}</td>
+                  <td className="amount" style={{alignContent:"center"}}>{expense.amount}</td>
                   <td style={{alignContent:"center"}}>{expense.date}</td>
                   <td style={{alignContent:"center"}}>{expense.time}</td>
                 </tr>
