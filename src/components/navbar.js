@@ -12,9 +12,9 @@ const Navbar = () => {
         }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <NavLink to="/" className="navbar-brand" >
             Expense Tracker
-          </a>
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
