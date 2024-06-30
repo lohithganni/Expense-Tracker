@@ -95,8 +95,8 @@ code {
 }  
 .add{
   position:fixed;
-  bottom:50px;
-  right:50px;
+  bottom:15px;
+  right:25px;
 
   z-index: 50;
 }
@@ -104,12 +104,9 @@ code {
   font-size:50px;
   padding:2px;
   font-weight: 500;
-  color:rgb(107, 106, 124);
+  color:rgba(107, 106, 124, 0.527);
 }
 .add span:hover{
-  color:black;
-  font-size: 56px;
-  position: fixed;
-  bottom:47px;
-  right:47px;
+  color:rgba(14, 14, 14, 0.616);
+  
 }
